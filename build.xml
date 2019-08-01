@@ -1,4 +1,4 @@
-<project name="SampleBuild" default="compile" basedir="D:\CD_CI\SampleWebApp">
+<project name="SampleBuild" default="compile" basedir=".">
 
 <taskdef resource="com/puppycrawl/tools/checkstyle/ant/checkstyle-ant-task.properties"
          classpath="WebContent/WEB-INF/lib/checkstyle-7.8.2-all.jar"/>
@@ -21,13 +21,13 @@
 	</target>
 
 	<target name="checkstyle" >
-		<checkstyle config="sun_checks.xml">
+		<checkstyle config="sun_checks.xml" failOnViolation="false">
 			<fileset dir="src/example" includes="**/*.java"/>
 			<formatter type="xml" toFile="checkstyle_errors.xml"/>
 		</checkstyle>
 	</target>
 
-	<target name="junit">
+	<target name="junit" depends="compile">
 		<junit printsummary="yes" haltonfailure="yes">
 			<classpath>
 				<pathelement location="build/classes"/>
@@ -37,8 +37,8 @@
 
 			<formatter type="plain"/>
 			
-			<test name="junit.TestCalculator" haltonfailure="no" outfile="TestCalculator_out.txt">
-				<formatter type="plain"/>
+			<test name="junit.TestCalculator" haltonfailure="no" outfile="TestCalculator_out">
+				<formatter type="xml"/>
 			</test>
 		</junit>	
 	</target>
